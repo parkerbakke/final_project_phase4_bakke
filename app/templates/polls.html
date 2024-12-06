@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Polls</h1>
+
+    <!-- Button to trigger the modal for adding a new poll -->
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addPollModal">
+        Add New Poll
+    </button>
+
+    <!-- Table displaying all polls -->
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Poll Question</th>
+                <th>Options</th>
+                <th>Votes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for poll in all_polls %}
+            <tr>
+                <td>{{ poll['question'] }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('polls.polls_home') }}">
+                        <input type="hidden" name="poll_id" value="{{ poll['poll_id'] }}">
+                        {% for option in poll['options'] %}
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="option{{ option['option_id'] }}" name="selected_option" value="{{ option['option_id'] }}" required>
+                            <label class="form-check-label" for="option{{ option['option_id'] }}">{{ option['poll_option'] }}</label>
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-success mt-2">Vote</button>
+                    </form>
+                </td>
+                <td>
+                    <ul>
+                        {% for option in poll['options'] %}
+                        <li>{{ option['poll_option'] }}: {{ option['votes'] }} votes</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Poll Modal -->
+<div class="modal fade" id="addPollModal" tabindex="-1" aria-labelledby="addPollModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPollModalLabel">Create a New Poll</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('polls.add_poll') }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="question" class="form-label">Poll Question</label>
+                        <input type="text" class="form-control" name="question" required>
+                    </div>
+
+                    <!-- Dynamic Options -->
+                    <div class="mb-3" id="options-container">
+                        <label for="options" class="form-label">Poll Options</label>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" name="options[]" placeholder="Option 1" required>
+                        </div>
+                    </div>
+
+                    <!-- Add Option Button -->
+                    <button type="button" class="btn btn-secondary" id="add-option-btn">Add Option</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Poll</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let optionCount = 1; // Start with one option
+        const optionsContainer = document.getElementById("options-container");
+
+        const addOption = () => {
+            optionCount++;
+
+            const newOptionDiv = document.createElement("div");
+            newOptionDiv.classList.add("input-group", "mb-2");
+            newOptionDiv.id = "option" + optionCount;
+
+            const newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.classList.add("form-control");
+            newInput.name = "options[]";
+            newInput.placeholder = "Option " + optionCount;
+            newOptionDiv.appendChild(newInput);
+
+            optionsContainer.appendChild(newOptionDiv);
+        };
+
+        const addOptionButton = document.getElementById("add-option-btn");
+        addOptionButton.addEventListener("click", addOption);
+    });
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

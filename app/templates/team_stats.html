@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Team Statistics</h1>
+
+    <!-- Team Overview -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h2>{{ team_stats['team_name'] }}</h2>
+        </div>
+        <div class="card-body">
+            <p><strong>Games Played:</strong> {{ team_stats['games_played'] }}</p>
+            <p><strong>Wins:</strong> {{ team_stats['wins'] }}</p>
+            <p><strong>Losses:</strong> {{ team_stats['losses'] }}</p>
+            <p><strong>Win Percentage:</strong> {{ team_stats['win_percentage'] }}</p>
+            <p><strong>Runs Scored:</strong> {{ team_stats['runs_scored'] }}</p>
+            <p><strong>Runs Allowed:</strong> {{ team_stats['runs_allowed'] }}</p>
+        </div>
+    </div>
+
+    <!-- Additional Team Stats -->
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Category</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Home Runs</td>
+                <td>{{ team_stats['home_runs'] }}</td>
+            </tr>
+            <tr>
+                <td>RBIs</td>
+                <td>{{ team_stats['rbis'] }}</td>
+            </tr>
+            <tr>
+                <td>Stolen Bases</td>
+                <td>{{ team_stats['stolen_bases'] }}</td>
+            </tr>
+            <tr>
+                <td>Batting Average</td>
+                <td>{{ team_stats['batting_avg'] }}</td>
+            </tr>
+            <tr>
+                <td>ERA (Earned Run Average)</td>
+                <td>{{ team_stats['era'] }}</td>
+            </tr>
+            <tr>
+                <td>Strikeouts</td>
+                <td>{{ team_stats['strikeouts'] }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

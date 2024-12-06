@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Players</h1>
+    
+    <!-- Players Table -->
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Player Name</th>
+                <th>Position</th>
+                <th>Team</th>
+                <th>Games Played</th>
+                <th>At Bats</th>
+                <th>Runs</th>
+                <th>Hits</th>
+                <th>Doubles</th>
+                <th>Triples</th>
+                <th>Home Runs</th>
+                <th>RBIs</th>
+                <th>Stolen Bases</th>
+                <th>Batting Avg</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in all_players %}
+            <tr>
+                <td>{{ player[1] }}</td>
+                <td>{{ player[2] }}</td>
+                <td>{{ player[3] }}</td>
+                <td>{{ player[4] }}</td>
+                <td>{{ player[5] }}</td>
+                <td>{{ player[6] }}</td>
+                <td>{{ player[7] }}</td>
+                <td>{{ player[8] }}</td>
+                <td>{{ player[9] }}</td>
+                <td>{{ player[10] }}</td>
+                <td>{{ player[11] }}</td>
+                <td>{{ player[12] }}</td>
+                <td>{{ player[13] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
