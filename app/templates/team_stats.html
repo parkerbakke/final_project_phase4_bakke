@@ -1,58 +1,208 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="mb-4">Team Statistics</h1>
+<div class="container-fluid mt-4">
+    <h1 class="text-center text-primary mb-4">2024 Atlanta Braves Team Statistics</h1>
 
-    <!-- Team Overview -->
-    <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-            <h2>{{ team_stats['team_name'] }}</h2>
-        </div>
+    <!-- Single large card for team stats -->
+    <div class="card shadow-lg border-0">
         <div class="card-body">
-            <p><strong>Games Played:</strong> {{ team_stats['games_played'] }}</p>
-            <p><strong>Wins:</strong> {{ team_stats['wins'] }}</p>
-            <p><strong>Losses:</strong> {{ team_stats['losses'] }}</p>
-            <p><strong>Win Percentage:</strong> {{ team_stats['win_percentage'] }}</p>
-            <p><strong>Runs Scored:</strong> {{ team_stats['runs_scored'] }}</p>
-            <p><strong>Runs Allowed:</strong> {{ team_stats['runs_allowed'] }}</p>
+            <div class="row text-center">
+                <div class="col-md-4 mb-3">
+                    <h2 class="text-primary">{{ all_team_stats[0].team_name }}</h2>
+                    <p class="text-muted">{{ all_team_stats[0].team_abbreviation }} | Season Year: {{ all_team_stats[0].season_year }}</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Manager</h5>
+                    <p class="text-muted">{{ all_team_stats[0].team_manager }}</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Record</h5>
+                    <p><span class="text-success fw-bold">{{ all_team_stats[0].wins }}</span> -
+                    <span class="text-danger fw-bold">{{ all_team_stats[0].losses }}</span></p>
+                </div>
+            </div>
+            <hr>
+            <!-- Team performance metrics -->
+            <div class="row gx-5">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>Runs</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].runs }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>Home Runs</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].home_runs }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>Batting Average</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].batting_average }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>On-Base %</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].on_base_percentage }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>Slugging %</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].slugging_percentage }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>ERA</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].era }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>WHIP</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].whip }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>Strikeouts</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].strikeouts }}</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="p-3 border bg-light rounded shadow-sm text-center">
+                        <h5>Fielding %</h5>
+                        <p class="display-5 text-primary fw-bold">{{ all_team_stats[0].fielding_percentage }}</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <!-- Action buttons -->
+            <div class="text-center">
+                <button type="button" class="btn btn-warning btn-lg shadow-sm" data-bs-toggle="modal" data-bs-target="#editTeamStatsModal{{ all_team_stats[0].team_id }}">
+                    Edit Team Stats
+                </button>
+                <button type="button" class="btn btn-danger btn-lg shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteTeamStatsModal{{ all_team_stats[0].team_id }}">
+                    Delete Team Stats
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- Additional Team Stats -->
-    <table class="table table-striped table-bordered">
-        <thead class="thead-dark">
-            <tr>
-                <th>Category</th>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Home Runs</td>
-                <td>{{ team_stats['home_runs'] }}</td>
-            </tr>
-            <tr>
-                <td>RBIs</td>
-                <td>{{ team_stats['rbis'] }}</td>
-            </tr>
-            <tr>
-                <td>Stolen Bases</td>
-                <td>{{ team_stats['stolen_bases'] }}</td>
-            </tr>
-            <tr>
-                <td>Batting Average</td>
-                <td>{{ team_stats['batting_avg'] }}</td>
-            </tr>
-            <tr>
-                <td>ERA (Earned Run Average)</td>
-                <td>{{ team_stats['era'] }}</td>
-            </tr>
-            <tr>
-                <td>Strikeouts</td>
-                <td>{{ team_stats['strikeouts'] }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Modals -->
+    <div class="modal fade" id="editTeamStatsModal{{ all_team_stats[0].team_id }}" tabindex="-1" aria-labelledby="editTeamStatsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content shadow-lg">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title" id="editTeamStatsModalLabel">Edit Team Stats</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{{ url_for('team_stats.update_team_stats', team_id=all_team_stats[0].team_id) }}">
+                <div class="modal-body" style="color: black;"> <!-- Text color explicitly set to black -->
+                    <div class="mb-3">
+                        <label for="team_name" class="form-label">Team Name</label>
+                        <input type="text" class="form-control" id="team_name" name="team_name" value="{{ all_team_stats[0].team_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="team_abbreviation" class="form-label">Team Abbreviation</label>
+                        <input type="text" class="form-control" id="team_abbreviation" name="team_abbreviation" value="{{ all_team_stats[0].team_abbreviation }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="season_year" class="form-label">Season Year</label>
+                        <input type="number" class="form-control" id="season_year" name="season_year" value="{{ all_team_stats[0].season_year }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="team_manager" class="form-label">Manager</label>
+                        <input type="text" class="form-control" id="team_manager" name="team_manager" value="{{ all_team_stats[0].team_manager }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="wins" class="form-label">Wins</label>
+                        <input type="number" class="form-control" id="wins" name="wins" value="{{ all_team_stats[0].wins }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="losses" class="form-label">Losses</label>
+                        <input type="number" class="form-control" id="losses" name="losses" value="{{ all_team_stats[0].losses }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="runs" class="form-label">Runs</label>
+                        <input type="number" class="form-control" id="runs" name="runs" value="{{ all_team_stats[0].runs }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="home_runs" class="form-label">Home Runs</label>
+                        <input type="number" class="form-control" id="home_runs" name="home_runs" value="{{ all_team_stats[0].home_runs }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="batting_average" class="form-label">Batting Average</label>
+                        <input type="text" class="form-control" id="batting_average" name="batting_average" value="{{ all_team_stats[0].batting_average }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="on_base_percentage" class="form-label">On-Base Percentage</label>
+                        <input type="text" class="form-control" id="on_base_percentage" name="on_base_percentage" value="{{ all_team_stats[0].on_base_percentage }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="slugging_percentage" class="form-label">Slugging Percentage</label>
+                        <input type="text" class="form-control" id="slugging_percentage" name="slugging_percentage" value="{{ all_team_stats[0].slugging_percentage }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="era" class="form-label">ERA</label>
+                        <input type="text" class="form-control" id="era" name="era" value="{{ all_team_stats[0].era }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="whip" class="form-label">WHIP</label>
+                        <input type="text" class="form-control" id="whip" name="whip" value="{{ all_team_stats[0].whip }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="strikeouts" class="form-label">Strikeouts</label>
+                        <input type="number" class="form-control" id="strikeouts" name="strikeouts" value="{{ all_team_stats[0].strikeouts }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fielding_percentage" class="form-label">Fielding Percentage</label>
+                        <input type="text" class="form-control" id="fielding_percentage" name="fielding_percentage" value="{{ all_team_stats[0].fielding_percentage }}" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-warning">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="modal fade" id="deleteTeamStatsModal{{ all_team_stats[0].team_id }}" tabindex="-1" aria-labelledby="deleteTeamStatsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content shadow-lg">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Delete Team Stats</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this team's statistics?
+                </div>
+                <div class="modal-footer">
+                    <form method="post" action="{{ url_for('team_stats.delete_team_stats', team_id=all_team_stats[0].team_id) }}">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+

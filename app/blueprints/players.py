@@ -10,29 +10,27 @@ def players_home():
 
     # Handle POST request to add a new player
     if request.method == 'POST':
+        uniform_number = request.form['uniform_number']
         player_name = request.form['player_name']
-        position = request.form['position']
-        team = request.form['team']
-        games_played = request.form['games_played']
-        at_bats = request.form['at_bats']
-        runs = request.form['runs']
-        hits = request.form['hits']
-        doubles = request.form['doubles']
-        triples = request.form['triples']
-        home_runs = request.form['home_runs']
-        rbis = request.form['rbis']
-        stolen_bases = request.form['stolen_bases']
-        batting_avg = request.form['batting_avg']
+        player_country = request.form['player_country']
+        player_active = request.form['player_active']
+        player_il = request.form['player_il']
+        player_age = request.form['player_age']
+        player_hitting = request.form['player_hitting']
+        player_throwing = request.form['player_throwing']
+        player_height = request.form['player_height']
+        player_weight = request.form['player_weight']
+        player_dob = request.form['player_dob']
+        player_firstyear = request.form['player_firstyear']
+        player_position = request.form['player_position']
 
-        # Insert the new player into the database
-        cursor.execute(
-            '''INSERT INTO players (
-                player_name, position, team, games_played, at_bats, runs, hits, doubles, triples, 
-                home_runs, rbis, stolen_bases, batting_avg
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''',
-            (player_name, position, team, games_played, at_bats, runs, hits, doubles, triples,
-             home_runs, rbis, stolen_bases, batting_avg)
-        )
+        cursor.execute('''
+            INSERT INTO players (uniform_number, player_name, player_country, player_active, player_il, 
+                                 player_age, player_hitting, player_throwing, player_height, player_weight, 
+                                 player_dob, player_firstyear, player_position)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        ''', (uniform_number, player_name, player_country, player_active, player_il, player_age, player_hitting,
+              player_throwing, player_height, player_weight, player_dob, player_firstyear, player_position))
         db.commit()
 
         flash('New player added successfully!', 'success')
@@ -49,38 +47,37 @@ def update_player(player_id):
     cursor = db.cursor()
 
     if request.method == 'POST':
-        # Update the player's details
+        uniform_number = request.form['uniform_number']
         player_name = request.form['player_name']
-        position = request.form['position']
-        team = request.form['team']
-        games_played = request.form['games_played']
-        at_bats = request.form['at_bats']
-        runs = request.form['runs']
-        hits = request.form['hits']
-        doubles = request.form['doubles']
-        triples = request.form['triples']
-        home_runs = request.form['home_runs']
-        rbis = request.form['rbis']
-        stolen_bases = request.form['stolen_bases']
-        batting_avg = request.form['batting_avg']
+        player_country = request.form['player_country']
+        player_active = request.form['player_active']
+        player_il = request.form['player_il']
+        player_age = request.form['player_age']
+        player_hitting = request.form['player_hitting']
+        player_throwing = request.form['player_throwing']
+        player_height = request.form['player_height']
+        player_weight = request.form['player_weight']
+        player_dob = request.form['player_dob']
+        player_firstyear = request.form['player_firstyear']
+        player_position = request.form['player_position']
 
-        cursor.execute(
-            '''UPDATE players SET 
-                player_name = %s, position = %s, team = %s, games_played = %s, at_bats = %s, runs = %s, hits = %s, 
-                doubles = %s, triples = %s, home_runs = %s, rbis = %s, stolen_bases = %s, batting_avg = %s 
-                WHERE player_id = %s''',
-            (player_name, position, team, games_played, at_bats, runs, hits, doubles, triples,
-             home_runs, rbis, stolen_bases, batting_avg, player_id)
-        )
+        cursor.execute('''
+            UPDATE players
+            SET uniform_number = %s, player_name = %s, player_country = %s, player_active = %s, player_il = %s, 
+                player_age = %s, player_hitting = %s, player_throwing = %s, player_height = %s, 
+                player_weight = %s, player_dob = %s, player_firstyear = %s, player_position = %s
+            WHERE player_id = %s
+        ''', (uniform_number, player_name, player_country, player_active, player_il, player_age, player_hitting,
+              player_throwing, player_height, player_weight, player_dob, player_firstyear, player_position, player_id))
         db.commit()
 
         flash('Player updated successfully!', 'success')
         return redirect(url_for('players.players_home'))
 
-    # GET method: fetch player's current data for pre-populating the form
+    # GET method: fetch player data for pre-populating the form
     cursor.execute('SELECT * FROM players WHERE player_id = %s', (player_id,))
     current_player = cursor.fetchone()
-    return render_template('update_player_modal.html', current_player=current_player)
+    return render_template('update_player.html', current_player=current_player)
 
 @players.route('/delete_player/<int:player_id>', methods=['POST'])
 def delete_player(player_id):
@@ -93,4 +90,6 @@ def delete_player(player_id):
 
     flash('Player deleted successfully!', 'danger')
     return redirect(url_for('players.players_home'))
+
+
 

@@ -1,53 +1,51 @@
 Table players {
-  player_id int [pk, increment]: uniquely identifies each player
-  mlb_id int
-  name varchar(100): player's name
-  team varchar(3): player's team
-  position varchar(10): player's position
-  birth_date date: player's date of birth
-  bats varchar(1): player's batting hand
-  throws varchar(1): player's throwing hand
-  games_played int: number of games played
-  hits int: number of hits
-  home_runs int: number of home runs
-  rbis int: number of runs batted in
-  stolen_bases int: number of stolen bases
-  batting_average decimal(5,3): player's batting average
-  on_base_percentage decimal(5,3): player's on-base percentage
-  slugging_percentage decimal(5,3): player's slugging percentage
-  ops decimal(5,3): player's on-base plus slugging percentage
+    player_id int [pk, increment]
+    uniform_number int
+    player_name varchar(45)
+    player_country varchar(45)
+    player_active varchar(45)
+    player_il varchar(45)
+    player_age int
+    player_hitting varchar(45)
+    player_throwing varchar(45)
+    player_height varchar(45)
+    player_weight int
+    player_dob varchar(45)
+    player_firstyear int
+    player_nameadditional varchar(45)
+    player_position varchar(45)
 }
 
 Table team_stats {
-  team_id int [pk, increment]: uniquely identifies each team
-  team_name varchar(100): team's name
-  team_abbreviation varchar(3): team's abbreviation
-  season_year int: year of the season
-  games_played int: number of games played
-  wins int: number of wins
-  losses int: number of losses
-  runs int: number of runs scored
-  home_runs int: number of home runs
-  batting_average decimal(5,3): team's batting average
-  on_base_percentage decimal(5,3): team's on-base percentage
-  slugging_percentage decimal(5,3): team's slugging percentage
-  era decimal(4,2): team's earned run average
-  whip decimal(5,3): team's walks plus hits per inning pitched
-  strikeouts int: number of strikeouts
-  save_opportunities int: number of save opportunities
-  stolen_bases int: number of stolen bases
-  fielding_percentage decimal(5,3): team's fielding percentage
-  last_updated timestamp: last time the data was updated
+    team_id int [pk, increment]
+    team_name varchar(100)
+    team_abbreviation varchar(3)
+    season_year int
+    games_played int
+    wins int
+    losses int
+    runs int
+    home_runs int
+    batting_average decimal(5,3)
+    on_base_percentage decimal(5,3)
+    slugging_percentage decimal(5,3)
+    era decimal(4,2)
+    whip decimal(5,3)
+    strikeouts int
+    save_opportunities int
+    stolen_bases int
+    fielding_percentage decimal(5,3)
+    last_updated timestamp
 }
 
 Table polls {
-  poll_id int [pk, increment]: uniquely identifies each poll
-  question varchar(255): poll question
+    poll_id int [pk, increment]
+    question varchar(255)
 }
 
 Table poll_options {
-  option_id int [pk, increment]: uniquely identifies each poll option
-  poll_id int [ref: > polls.poll_id]: poll that the option belongs to
-  poll_option varchar(255): poll option
-  votes int: number of votes for the option
+    option_id int [pk, increment]
+    poll_id int [ref: > polls.poll_id]
+    poll_option varchar(255)
+    votes int
 }

@@ -3,16 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Braves Fan App</title>
+    <title>Braves Central</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Add Bootstrap or other CSS frameworks if needed -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- Custom Fonts and Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(90deg, #00468b, #ba0c2f);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background: #ba0c2f;
+            border-bottom: 2px solid #00468b;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #00468b !important;
+            font-weight: bold;
+        }
+
+        /* Content Styling */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1, h2, h3 {
+            color: #ba0c2f;
+            font-weight: bold;
+        }
+
+        table.table {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        table.table thead {
+            background: #ba0c2f;
+            color: #fff;
+        }
+
+        table.table th, table.table td {
+            text-align: center;
+        }
+
+        /* Footer Styling */
+        .footer {
+            background: #00468b;
+            color: #fff;
+            border-top: 2px solid #ba0c2f;
+        }
+
+        .footer span {
+            font-size: 0.9rem;
+        }
+
+        /* Alerts */
+        .alert {
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .alert.alert-success {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .alert.alert-danger {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .alert.alert-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: #ba0c2f;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #00468b;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background: #ba0c2f;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('index') }}">Braves Fan App</a>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Braves Central</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -39,9 +149,12 @@
     <div class="container mt-4">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="alert alert-dismissible fade show" role="alert">
+                <div>
                     {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     {% endfor %}
                 </div>
             {% endif %}
@@ -51,13 +164,18 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container">
-            <span class="text-muted">&copy; 2024 Braves Fan App. All rights reserved.</span>
-        </div>
-    </footer>
+    <footer class="footer mt-auto py-3">
+    <div class="container text-center">
+        <span class="text-primary">&copy; 2024 Braves Central. All rights reserved.</span>
+    </div>
+</footer>
+
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
+
