@@ -1,7 +1,120 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container mt-5">
 
-<h1>Game Viewer under development</h1>
 
+  <!-- Page Title -->
+  <h1 class="text-primary text-center mb-4">Current Weather at Truist Park, Home of the Braves</h1>
+
+  <!-- Weather Image -->
+  <div class="text-center">
+    <img id="weather-image" alt="Weather Image" class="img-fluid mb-4" style="max-height: 300px;">
+  </div>
+
+  <!-- Braves Home Opener Announcement -->
+  <div class="alert alert-danger text-center shadow-lg mb-5" role="alert" style="font-size: 1.25rem;">
+    🏟️ <strong>Atlanta Braves Home Opener:</strong> The Braves take on the Miami Marlins on
+    <strong>April 4th, 2025</strong> at <strong>7:15 PM ET</strong>! ⚾
+  </div>
+
+  <!-- Weather Data -->
+  {% if weather_data %}
+  <div class="row justify-content-center">
+    <!-- Weather Icon and Description -->
+    <div class="col-md-4">
+      <div class="card text-center shadow">
+        <div class="card-body">
+          <h5 class="card-title">Weather Condition</h5>
+          <img
+            src="http://openweathermap.org/img/wn/{{ weather_data.icon }}@4x.png"
+            alt="{{ weather_data.main_condition }} - {{ weather_data.description }}"
+            class="img-fluid mb-3">
+          <h6>{{ weather_data.main_condition }}</h6>
+          <p class="text-muted">{{ weather_data.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Temperature Details -->
+    <div class="col-md-4">
+      <div class="card text-center shadow">
+        <div class="card-body">
+          <h5 class="card-title">Temperature</h5>
+          <p><strong>Current:</strong> {{ weather_data.temperature }}°F</p>
+          <p><strong>Feels Like:</strong> {{ weather_data.feels_like }}°F</p>
+          <p><strong>Low:</strong> {{ weather_data.temp_min }}°F</p>
+          <p><strong>High:</strong> {{ weather_data.temp_max }}°F</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-4">
+    <!-- Wind and Cloud Details -->
+    <div class="col-md-4">
+      <div class="card text-center shadow">
+        <div class="card-body">
+          <h5 class="card-title">Wind and Clouds</h5>
+          <p><strong>Wind Speed:</strong> {{ weather_data.wind_speed }} m/s</p>
+          <p><strong>Cloud Cover:</strong> {{ weather_data.cloud_cover }}%</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Humidity -->
+    <div class="col-md-4">
+      <div class="card text-center shadow">
+        <div class="card-body">
+          <h5 class="card-title">Humidity</h5>
+          <p><strong>Humidity:</strong> {{ weather_data.humidity }}%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+  <div class="text-center">
+    <p class="text-danger">No weather data available. Please try again later.</p>
+  </div>
+  {% endif %}
+</div>
+
+<!-- JavaScript for Dynamic Image -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Weather condition from Flask data
+    const condition = "{{ weather_data.main_condition | safe }}";
+
+    // Map conditions to image paths
+    const weatherImages = {
+      Clear: "/static/assets/weather/sunny.webp",
+      Clouds: "/static/assets/weather/cloudy.jpg",
+      Rain: "/static/assets/weather/rainy.png",
+      Thunderstorm: "/static/assets/weather/rainy.png",
+      Drizzle: "/static/assets/weather/rainy.png",
+      Mist: "/static/assets/weather/rainy.png",
+      // Add more conditions as needed
+    };
+
+    // Get the weather image element
+    const weatherImage = document.getElementById("weather-image");
+
+    // Set the image source based on the condition
+    if (weatherImages[condition]) {
+      weatherImage.src = weatherImages[condition];
+      weatherImage.alt = condition;
+    } else {
+      weatherImage.src = "/static/assets/weather/default.png"; // Fallback image
+      weatherImage.alt = "Default Weather Image";
+    }
+  });
+</script>
 {% endblock %}
+
+
+
+
+
+
+

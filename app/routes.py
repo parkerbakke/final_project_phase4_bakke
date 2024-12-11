@@ -5,10 +5,6 @@ from . import app
 def index():
     return render_template('index.html')
 
-@app.route('/game_viewer')
-def game_viewer():
-    return render_template('game_viewer.html')
-
 
 
 
